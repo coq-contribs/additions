@@ -46,24 +46,12 @@ Section while_do.
                end
            end
        end)); auto; elim h'; auto.
-(*
-    Realizer <St>rec loop :: ::  {term_order} [s:St]<St> if (LoopExit_dec s)
-                                                   then s
-                                                   else (loop (Onestep s)).
-   Program_all.
-   Case a0;Trivial.
-   Case a0;Trivial.
-*)
   Qed.
 
   Lemma startloop :
    forall s : St, precond s -> {s' : St | Invar s' /\ LoopExit s'}.
   Proof.
   intros s p; apply loopexec with s; auto.
-(*
-   Realizer [s:St](loopexec s).
-   Program_all.
-*)
   Qed.
 
  Lemma while_not : forall s : St, precond s -> {s' : St | postcond s'}.
@@ -74,48 +62,5 @@ Section while_do.
                | exist s' h' => exist _ s' _
                end); elim h'; auto.
 
-(*
-  Realizer [s:St](startloop s).
-  Program_all.
-  Elim a ;Auto.
-*)
  Qed.
 End while_do.
-(*
- Constant while_not:
-  (St:Set)
-   (postcond:St->Prop)
-    (precond:St->Prop)
-     (Invar:St->Prop)
-      (term_order:St->St->Prop)
-       (LoopExit:St->Prop)
-        ((s:St)(Invar s)->{(LoopExit s)}+{~(LoopExit s)})
-         ->((s:St)
-             ~(LoopExit s)
-              ->(Invar s)->{s':St | ((Invar s')/\(term_order s' s))})
-            ->((s:St)(LoopExit s)->(Invar s)->(postcond s))
-               ->((s:St)(precond s)->(Invar s))
-                  ->(well_founded St term_order)
-                     ->(s:St)(precond s)->{s':St | (postcond s')}
-
-*)
-
-(* Usage:
-
-  Apply while_not with precond invar term_order loopexit x;
-    [ Realizer loopexit_dec |
-      Realizer one_step |
-      Auto with v62 or Idtac |
-      Auto with v62 or Idtac |
-      Auto with v62 or Idtac |
-      Auto with v62 or Idtac ].
-*)
-
-
-
-
-
-
-
-
-
