@@ -1,0 +1,88 @@
+fib.cmo: fib.ml main.cmo
+fib.cmx: fib.ml main.cmx
+fibo.cmo: fibo.ml fibo.cmi
+fibo.cmx: fibo.ml fibo.cmi
+main.cmo: main.ml fibo.cmi
+main.cmx: main.ml fibo.cmx
+fibo.cmi: fibo.mli
+binary_strat.vo: binary_strat.v ./strategies.vo ./euclid.vo ./shift.vo ./Le_lt_compl.vo ./Mult_compl.vo ./Constants.vo
+binary_strat.vi: binary_strat.v ./strategies.vo ./euclid.vo ./shift.vo ./Le_lt_compl.vo ./Mult_compl.vo ./Constants.vo
+Constants.vo: Constants.v
+Constants.vi: Constants.v
+develop.vo: develop.v ./Constants.vo ./monoid.vo ./spec.vo ./machine.vo ./Wf_compl.vo ./Mult_compl.vo ./euclid.vo ./two_power.vo
+develop.vi: develop.v ./Constants.vo ./monoid.vo ./spec.vo ./machine.vo ./Wf_compl.vo ./Mult_compl.vo ./euclid.vo ./two_power.vo
+dicho_strat.vo: dicho_strat.v ./strategies.vo ./euclid.vo ./shift.vo ./two_power.vo ./log2_spec.vo ./Le_lt_compl.vo ./Mult_compl.vo ./Constants.vo
+dicho_strat.vi: dicho_strat.v ./strategies.vo ./euclid.vo ./shift.vo ./two_power.vo ./log2_spec.vo ./Le_lt_compl.vo ./Mult_compl.vo ./Constants.vo
+euclid.vo: euclid.v ./Constants.vo ./Le_lt_compl.vo ./Mult_compl.vo
+euclid.vi: euclid.v ./Constants.vo ./Le_lt_compl.vo ./Mult_compl.vo
+extract.vo: extract.v ./main.vo
+extract.vi: extract.v ./main.vo
+fmpc.vo: fmpc.v
+fmpc.vi: fmpc.v
+generation.vo: generation.v ./monoid.vo ./spec.vo ./Constants.vo ./machine.vo ./Le_lt_compl.vo ./euclid.vo ./shift.vo ./two_power.vo ./log2_spec.vo ./develop.vo ./strategies.vo ./Mult_compl.vo ./Wf_compl.vo
+generation.vi: generation.v ./monoid.vo ./spec.vo ./Constants.vo ./machine.vo ./Le_lt_compl.vo ./euclid.vo ./shift.vo ./two_power.vo ./log2_spec.vo ./develop.vo ./strategies.vo ./Mult_compl.vo ./Wf_compl.vo
+imperative.vo: imperative.v
+imperative.vi: imperative.v
+Le_lt_compl.vo: Le_lt_compl.v ./Constants.vo
+Le_lt_compl.vi: Le_lt_compl.v ./Constants.vo
+log2_implementation.vo: log2_implementation.v ./Constants.vo ./Mult_compl.vo ./euclid.vo ./Le_lt_compl.vo ./shift.vo ./imperative.vo ./while.vo ./two_power.vo ./log2_spec.vo
+log2_implementation.vi: log2_implementation.v ./Constants.vo ./Mult_compl.vo ./euclid.vo ./Le_lt_compl.vo ./shift.vo ./imperative.vo ./while.vo ./two_power.vo ./log2_spec.vo
+log2_spec.vo: log2_spec.v ./Constants.vo ./Mult_compl.vo ./euclid.vo ./Le_lt_compl.vo ./shift.vo ./two_power.vo
+log2_spec.vi: log2_spec.v ./Constants.vo ./Mult_compl.vo ./euclid.vo ./Le_lt_compl.vo ./shift.vo ./two_power.vo
+machine.vo: machine.v ./monoid.vo ./Constants.vo
+machine.vi: machine.v ./monoid.vo ./Constants.vo
+main.vo: main.v ./Constants.vo ./generation.vo ./monoid.vo ./machine.vo ./strategies.vo ./spec.vo ./log2_spec.vo ./log2_implementation.vo ./while.vo ./imperative.vo ./develop.vo ./dicho_strat.vo ./binary_strat.vo ./trivial.vo ./standard.vo ./monofun.vo ./matrix.vo
+main.vi: main.v ./Constants.vo ./generation.vo ./monoid.vo ./machine.vo ./strategies.vo ./spec.vo ./log2_spec.vo ./log2_implementation.vo ./while.vo ./imperative.vo ./develop.vo ./dicho_strat.vo ./binary_strat.vo ./trivial.vo ./standard.vo ./monofun.vo ./matrix.vo
+matrix_nat.vo: matrix_nat.v ./monoid.vo ./fmpc.vo
+matrix_nat.vi: matrix_nat.v ./monoid.vo ./fmpc.vo
+matrix.vo: matrix.v ./monoid.vo ./fmpc.vo
+matrix.vi: matrix.v ./monoid.vo ./fmpc.vo
+monofun.vo: monofun.v ./monoid.vo
+monofun.vi: monofun.v ./monoid.vo
+monoid.vo: monoid.v ./Constants.vo
+monoid.vi: monoid.v ./Constants.vo
+Mult_compl.vo: Mult_compl.v ./Constants.vo ./Le_lt_compl.vo
+Mult_compl.vi: Mult_compl.v ./Constants.vo ./Le_lt_compl.vo
+shift.vo: shift.v ./Constants.vo ./Mult_compl.vo ./euclid.vo ./Le_lt_compl.vo
+shift.vi: shift.v ./Constants.vo ./Mult_compl.vo ./euclid.vo ./Le_lt_compl.vo
+spec.vo: spec.v ./monoid.vo ./machine.vo ./Constants.vo
+spec.vi: spec.v ./monoid.vo ./machine.vo ./Constants.vo
+standard.vo: standard.v ./monoid.vo
+standard.vi: standard.v ./monoid.vo
+strategies.vo: strategies.v ./Constants.vo
+strategies.vi: strategies.v ./Constants.vo
+trivial.vo: trivial.v ./monoid.vo
+trivial.vi: trivial.v ./monoid.vo
+two_power.vo: two_power.v ./Constants.vo ./Mult_compl.vo ./Le_lt_compl.vo
+two_power.vi: two_power.v ./Constants.vo ./Mult_compl.vo ./Le_lt_compl.vo
+Wf_compl.vo: Wf_compl.v
+Wf_compl.vi: Wf_compl.v
+while.vo: while.v
+while.vi: while.v
+binary_strat.html: binary_strat.v ./strategies.html ./euclid.html ./shift.html ./Le_lt_compl.html ./Mult_compl.html ./Constants.html
+Constants.html: Constants.v
+develop.html: develop.v ./Constants.html ./monoid.html ./spec.html ./machine.html ./Wf_compl.html ./Mult_compl.html ./euclid.html ./two_power.html
+dicho_strat.html: dicho_strat.v ./strategies.html ./euclid.html ./shift.html ./two_power.html ./log2_spec.html ./Le_lt_compl.html ./Mult_compl.html ./Constants.html
+euclid.html: euclid.v ./Constants.html ./Le_lt_compl.html ./Mult_compl.html
+extract.html: extract.v ./main.html
+fmpc.html: fmpc.v
+generation.html: generation.v ./monoid.html ./spec.html ./Constants.html ./machine.html ./Le_lt_compl.html ./euclid.html ./shift.html ./two_power.html ./log2_spec.html ./develop.html ./strategies.html ./Mult_compl.html ./Wf_compl.html
+imperative.html: imperative.v
+Le_lt_compl.html: Le_lt_compl.v ./Constants.html
+log2_implementation.html: log2_implementation.v ./Constants.html ./Mult_compl.html ./euclid.html ./Le_lt_compl.html ./shift.html ./imperative.html ./while.html ./two_power.html ./log2_spec.html
+log2_spec.html: log2_spec.v ./Constants.html ./Mult_compl.html ./euclid.html ./Le_lt_compl.html ./shift.html ./two_power.html
+machine.html: machine.v ./monoid.html ./Constants.html
+main.html: main.v ./Constants.html ./generation.html ./monoid.html ./machine.html ./strategies.html ./spec.html ./log2_spec.html ./log2_implementation.html ./while.html ./imperative.html ./develop.html ./dicho_strat.html ./binary_strat.html ./trivial.html ./standard.html ./monofun.html ./matrix.html
+matrix_nat.html: matrix_nat.v ./monoid.html ./fmpc.html
+matrix.html: matrix.v ./monoid.html ./fmpc.html
+monofun.html: monofun.v ./monoid.html
+monoid.html: monoid.v ./Constants.html
+Mult_compl.html: Mult_compl.v ./Constants.html ./Le_lt_compl.html
+shift.html: shift.v ./Constants.html ./Mult_compl.html ./euclid.html ./Le_lt_compl.html
+spec.html: spec.v ./monoid.html ./machine.html ./Constants.html
+standard.html: standard.v ./monoid.html
+strategies.html: strategies.v ./Constants.html
+trivial.html: trivial.v ./monoid.html
+two_power.html: two_power.v ./Constants.html ./Mult_compl.html ./Le_lt_compl.html
+Wf_compl.html: Wf_compl.v
+while.html: while.v
