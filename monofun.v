@@ -23,10 +23,6 @@ Section fun_.
  Lemma funmono : monoid (A -> A).
   Proof.
   refine (mkmonoid (A -> A) Id comp _ _ _); auto.
-(*
-  Realizer (mkmonoid A->A Id  comp).
-  Program; Unfold comp;Intros;Apply eta_A;Auto.
-*)
  Defined.
 End fun_.
 

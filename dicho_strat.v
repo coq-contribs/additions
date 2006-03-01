@@ -13,8 +13,6 @@
 
  This file presents our favorite strategy, which gave the best results 
  (see the included paper)
- We had some problems to define it in terms of Realizer/Program,
- this will be done in the next release:
 
  Briefly:
 
@@ -102,28 +100,13 @@ Proof.
  cut (0 < 2).
  2: auto with arith.
  intro H'.
- (* fails ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- Realizer <nat>let (x0:nat)=(quotient (S (S O)) x)
-          in (quotient (two_power x0) n).
- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- *)
  elim (quotient 2 H' x); intros.
  refine match quotient (two_power x0) _ n with
         | exist n _ => exist _ n _
         end.
-(*
- Realizer (quotient (two_power x0) n). 
- Do 2 Program.
- Auto with arith.
- Program. 
-*)
 
  unfold gt in |- *.
  apply lt_le_trans with 1; auto with arith.
-(*
- Cut (two_power O)=(1);[Intros T;Rewrite <- T|Simpl;Auto].
- Apply two_power_le;Auto with arith.
-*)
 
  elim p; intros.
  elim e; intros.
