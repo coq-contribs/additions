@@ -24,6 +24,8 @@ Mult_compl.v
 Le_lt_compl.v
 Constants.v
 extract.v
+extract_hs.v
+extract_scm.v
 # the test :
 -custom "ocamlopt -o fib nums.cmxa fibo.mli fibo.ml main.ml" extract.vo fib
 -custom

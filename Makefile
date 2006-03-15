@@ -52,7 +52,6 @@ CAMLOPTC=ocamlopt -c
 CAMLLINK=ocamlc
 CAMLOPTLINK=ocamlopt
 COQDEP=$(COQBIN)coqdep -c
-COQVO2XML=coq_vo2xml
 GRAMMARS=grammar.cma
 CAMLP4EXTEND=pa_extend.cmo pa_ifdef.cmo q_MLast.cmo
 PP=-pp "camlp4o -I . -I $(COQTOP)/parsing $(CAMLP4EXTEND) $(GRAMMARS) -impl"
@@ -97,7 +96,9 @@ VFILES=while.v\
   Mult_compl.v\
   Le_lt_compl.v\
   Constants.v\
-  extract.v
+  extract.v\
+  extract_hs.v\
+  extract_scm.v
 VOFILES=$(VFILES:.v=.vo)
 VIFILES=$(VFILES:.v=.vi)
 GFILES=$(VFILES:.v=.g)
@@ -130,6 +131,8 @@ all: while.vo\
   Le_lt_compl.vo\
   Constants.vo\
   extract.vo\
+  extract_hs.vo\
+  extract_scm.vo\
   fib\
   test
 
@@ -147,35 +150,7 @@ all.ps: $(VFILES)
 all-gal.ps: $(VFILES)
 	$(COQDOC) -ps -g -o $@ `$(COQDEP) -sort -suffix .v $(VFILES)`
 
-xml:: .xml_time_stamp
-.xml_time_stamp: while.vo\
-  two_power.vo\
-  trivial.vo\
-  strategies.vo\
-  standard.vo\
-  spec.vo\
-  shift.vo\
-  monoid.vo\
-  monofun.vo\
-  matrix.vo\
-  main.vo\
-  machine.vo\
-  log2_spec.vo\
-  log2_implementation.vo\
-  imperative.vo\
-  generation.vo\
-  fmpc.vo\
-  euclid.vo\
-  dicho_strat.vo\
-  develop.vo\
-  binary_strat.vo\
-  Wf_compl.vo\
-  Mult_compl.vo\
-  Le_lt_compl.vo\
-  Constants.vo\
-  extract.vo
-	$(COQVO2XML) $(COQFLAGS) $(?:%.o=%)
-	touch .xml_time_stamp
+
 
 ###################
 #                 #
@@ -200,7 +175,7 @@ test: fib
 #                  #
 ####################
 
-.PHONY: all opt byte archclean clean install depend xml
+.PHONY: all opt byte archclean clean install depend html
 
 .SUFFIXES: .v .vo .vi .g .html .tex .g.tex .g.html
 
@@ -235,25 +210,28 @@ include .depend
 
 .depend depend:
 	rm -f .depend
-	$(COQDEP) -i $(COQLIBS) *.v *.ml *.mli >.depend
-	$(COQDEP) $(COQLIBS) -suffix .html *.v >>.depend
-
-xml::
+	$(COQDEP) -i $(COQLIBS) $(VFILES) *.ml *.mli >.depend
+	$(COQDEP) $(COQLIBS) -suffix .html $(VFILES) >>.depend
 
 install:
 	mkdir -p `$(COQC) -where`/user-contrib
-	cp -f *.vo `$(COQC) -where`/user-contrib
+	cp -f $(VOFILES) `$(COQC) -where`/user-contrib
 
 Makefile: Make
 	mv -f Makefile Makefile.bak
 	$(COQBIN)coq_makefile -f Make -o Makefile
 
+
 clean:
-	rm -f *.cmo *.cmi *.cmx *.o *.vo *.vi *.g *~
+	rm -f *.cmo *.cmi *.cmx *.o $(VOFILES) $(VIFILES) $(GFILES) *~
 	rm -f all.ps all-gal.ps $(HTMLFILES) $(GHTMLFILES)
+	- rm -f fib
+	- rm -f test
 
 archclean:
 	rm -f *.cmx *.o
+
+html:
 
 # WARNING
 #
