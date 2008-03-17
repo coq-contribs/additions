@@ -151,12 +151,12 @@ Section generation.
         match log2_r p _ with
         | existS l b =>
             match b with
-            | left _ => inleft _ (inr (exist _ l _))
+            | left _ => inleft _ (inr _ (exist _ l _))
             | right _ =>
                 match gamma with
                 | mkstrat s =>
                     match s p _ with
-                    | exist q _ => inleft _ (inl (exist _ q _))
+                    | exist q _ => inleft _ (inl _ (exist _ q _))
                     end
                 end
             end
