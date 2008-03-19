@@ -44,17 +44,15 @@ Require Import main.
 Extraction Language Scheme.
 
 Axiom int : Set. 
-Axiom big_int : Set.
 Axiom i2n : int -> nat. 
-Axiom z2b : Z -> big_int. 
+Axiom z2i : Z -> int. 
 
 Extract Inlined Constant int => "int". 
-Extract Constant big_int => "Big_int.big_int".
 
 Extract Constant i2n =>
  "(lambda (i) (if (zero? i) `(O) `(S ,(i2n (- i 1)))))".
 
-Extract Constant z2b =>
+Extract Constant z2i =>
  "(lambda (z)
     (define (p2i p)
       (match p
@@ -73,4 +71,12 @@ Extraction NoInline u o top pop.
 
 Extraction NoInline M11 M12 M21 M22 Mat_mult.
 
-Extraction "fibo" fibonacci int big_int i2n z2b.
+Extraction "fibo" fibonacci i2n z2i.
+
+(* After fetching macro_extr.scm (see header of fibo.scm),
+   a typical session would look like: 
+  
+    (load "fibo.scm")
+    (z2i (fibonacci (i2n 100)))
+
+*)
