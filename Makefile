@@ -23,9 +23,9 @@
 #                       #
 #########################
 
-OCAMLLIBS:=-I .
-COQLIBS:=-I . 
-COQDOCLIBS:=
+OCAMLLIBS:=
+COQLIBS:= -R . Additions
+COQDOCLIBS:=-R . Additions
 
 ##########################
 #                        #
@@ -102,37 +102,8 @@ GFILES:=$(VFILES:.v=.g)
 HTMLFILES:=$(VFILES:.v=.html)
 GHTMLFILES:=$(VFILES:.v=.g.html)
 
-all: while.vo\
-  two_power.vo\
-  trivial.vo\
-  strategies.vo\
-  standard.vo\
-  spec.vo\
-  shift.vo\
-  monoid.vo\
-  monofun.vo\
-  matrix.vo\
-  main.vo\
-  machine.vo\
-  log2_spec.vo\
-  log2_implementation.vo\
-  imperative.vo\
-  generation.vo\
-  fmpc.vo\
-  euclid.vo\
-  dicho_strat.vo\
-  develop.vo\
-  binary_strat.vo\
-  Wf_compl.vo\
-  Mult_compl.vo\
-  Le_lt_compl.vo\
-  Constants.vo\
-  extract.vo\
-  extract_hs.vo\
-  extract_scm.vo\
-  fib\
+all: $(VOFILES) fib\
   test
-
 spec: $(VIFILES)
 
 gallina: $(GFILES)
@@ -178,8 +149,6 @@ test: fib
 
 .PHONY: all opt byte archclean clean install depend html
 
-.SUFFIXES: .v .vo .vi .g .html .tex .g.tex .g.html
-
 %.vo %.glob: %.v
 	$(COQC) -dump-glob $*.glob $(COQDEBUG) $(COQFLAGS) $*
 
@@ -201,13 +170,8 @@ test: fib
 %.g.html: %.v %.glob
 	$(COQDOC) -glob-from $*.glob -html -g $< -o $@
 
-%.v.d.raw: %.v
-	$(COQDEP) -slash $(COQLIBS) "$<" > "$@"\
-	  || ( RV=$$?; rm -f "$@"; exit $${RV} )
-
-%.v.d: %.v.d.raw
-	$(HIDE)sed 's/\(.*\)\.vo[[:space:]]*:/\1.vo \1.glob:/' < "$<" > "$@" \
-	  || ( RV=$$?; rm -f "$@"; exit $${RV} )
+%.v.d: %.v
+	$(COQDEP) -glob -slash $(COQLIBS) "$<" > "$@" || ( RV=$$?; rm -f "$@"; exit $${RV} )
 
 byte:
 	$(MAKE) all "OPT:=-byte"
