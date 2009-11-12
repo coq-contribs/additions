@@ -28,7 +28,7 @@ extract.v
 extract_hs.v
 extract_scm.v
 # the test :
--custom "ocamlopt -o fib nums.cmxa fibo.mli fibo.ml main.ml" extract.vo fib
+-custom "$(CAMLBIN)ocamlopt -o fib nums.cmxa fibo.mli fibo.ml main.ml" extract.vo fib
 -custom
 	"@echo '***** test: checking Fibonacci(2000) *****'
 	rm -f .fib_2000
