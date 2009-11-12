@@ -57,7 +57,7 @@ Lemma matrix : monoid Mat2.
 *)
  exact Mat_assoc.
  simple induction a. 
-  intros.
+  intros M13 M14 M23 M24.
   unfold Id2, Mat_mult in |- *; simpl in |- *.
   repeat elim Zplus_0_r_reverse.
   case M13; case M14; case M23; case M24; auto.
