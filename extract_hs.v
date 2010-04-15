@@ -69,7 +69,10 @@ Extract Constant z2i =>
           Zneg p -> - (p2b p)
 ".
 
-Extraction Inline Wf_nat.gt_wf_rec Wf_nat.lt_wf_rec.
+Extract Inductive bool => Bool [ True False ].
+Extract Inductive sumbool => Bool [ True False ].
+	    
+Extraction Inline Wf_nat.gt_wf_rec Wf_nat.lt_wf_rec induction_ltof2.
 
 Extraction NoInline u o top pop.
 
@@ -80,5 +83,5 @@ Extraction "Fibo" fibonacci int i2n z2i.
 (* finally, 
      import qualified Prelude 
    is to be replaced by 
-     import Prelude hiding (Bool, True, False, Left, Right)
+     import Prelude
 *)

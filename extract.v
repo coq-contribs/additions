@@ -71,8 +71,12 @@ Extract Constant i2n =>
 "
   .
    ].
-
-Extraction Inline Wf_nat.gt_wf_rec Wf_nat.lt_wf_rec.
+  
+Extract Inductive bool => bool [ true false ].
+Extract Inductive sumbool => bool [ true false ].
+Extract Inductive sigT => "(*)" [ "(,)" ].
+  
+Extraction Inline Wf_nat.gt_wf_rec Wf_nat.lt_wf_rec Wf_nat.induction_ltof2.
 
 Extraction NoInline u o top pop.
 

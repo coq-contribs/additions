@@ -113,18 +113,11 @@ Section Monoid.
 (* Operational semantics of the elementary instructions *)
 
  Definition Exec1 (c : Instr) (v : Config) : Config :=
-   let (m, s) return Config := v in
-   match c return Config with
-   | MUL =>
-       (* MUL *)  config (oM m (top s)) (pop s) 
-       
-       (* SQR *) 
+   let (m, s) := v in
+   match c with
+   | MUL => config (oM m (top s)) (pop s) 
    | SQR => config (oM m m) s
-       
-       (* PUSH *) 
    | PUSH => config m (push m s)
-       
-       (* SWAP *) 
    | SWAP => config m (push (top (pop s)) (push (top s) (pop (pop s))))
    end.
  (****************************************************************)
