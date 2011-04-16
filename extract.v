@@ -82,4 +82,6 @@ Extraction NoInline u o top pop.
 
 Extraction NoInline M11 M12 M21 M22 Mat_mult.
 
+Set Extraction AccessOpaque.
+
 Extraction "fibo" fibonacci int big_int i2n z2b.

@@ -71,6 +71,8 @@ Extraction NoInline u o top pop.
 
 Extraction NoInline M11 M12 M21 M22 Mat_mult.
 
+Set Extraction AccessOpaque.
+
 Extraction "fibo" fibonacci i2n z2i.
 
 (* After fetching macro_extr.scm (see header of fibo.scm),
