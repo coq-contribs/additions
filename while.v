@@ -24,7 +24,7 @@
 (*    33405 Talence CEDEX,                                                  *)
 (*    e-mail:  casteran@labri.u-bordeaux.fr                                 *)
 
-
+Global Set Asymmetric Patterns.
 
 Section while_do.
  Variable St : Set. (* states *)

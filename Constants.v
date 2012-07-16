@@ -24,6 +24,7 @@
 (*    33405 Talence CEDEX,                                                  *)
 (*    e-mail:  casteran@labri.u-bordeaux.fr                                 *)
 
+Global Set Asymmetric Patterns.
 
 (*
   This file contains  abreviations for the first natural integers,
