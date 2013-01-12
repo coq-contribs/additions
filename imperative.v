@@ -13,6 +13,7 @@
 (* Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA *)
 (* 02110-1301 USA                                                     *)
 
+Set Asymmetric Patterns.
 
 (* Contribution to the Coq Library   V6.3 (July 1999)                    *)
 
