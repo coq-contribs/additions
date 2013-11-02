@@ -61,8 +61,8 @@ Section applications.
    match log2 n _ with
    | existS l b =>
        match b with
-       | left _ => exist _ l _
-       | right _ => exist _ (S l) _
+       | left e => exist _ l _
+       | right a => exist _ (S l) _
        end
    end).
  auto with arith.

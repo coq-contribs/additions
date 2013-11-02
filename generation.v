@@ -144,15 +144,15 @@ Section generation.
   (*******************************************************)
   Proof.
   refine
-   (fun p _ =>
+   (fun p _H =>
     match eq_nat_dec p three with
     | left h => inright _ h
-    | right _ =>
+    | right n =>
         match log2_r p _ with
         | existS l b =>
             match b with
             | left _ => inleft _ (inr _ (exist _ l _))
-            | right _ =>
+            | right a =>
                 match gamma with
                 | mkstrat s =>
                     match s p _ with

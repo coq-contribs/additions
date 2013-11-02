@@ -107,10 +107,10 @@ Lemma fibonacci : forall n : nat, {q : Z | q = Z_of_nat (Fib n)}.
 refine
  (fun n =>
   match zerop n with
-  | left _ => exist _ 1%Z _
-  | right _ =>
+  | left e => exist _ 1%Z _
+  | right l =>
       match addchains dic n Mat2 matrix fib_mat with
-      | exist m _ => exist _ (M11 m) _
+      | exist m e => exist _ (M11 m) _
       end
   end).
 

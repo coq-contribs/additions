@@ -77,7 +77,7 @@ Proof.
       | O => gencode_intro _ End _
       | S p =>
           match M2q p with
-          | gencode_intro c _ => gencode_intro _ (seq SQR c) _
+          | gencode_intro c s => gencode_intro _ (seq SQR c) _
           end
       end)).
 (* 
@@ -107,7 +107,7 @@ Lemma C2M : forall p q : nat, gencode (Call_C p q) -> gencode (Call_M p).
 Proof.
  refine
   (fun p q g => match g with
-                | gencode_intro c _ => gencode_intro _ c _
+                | gencode_intro c s => gencode_intro _ c _
                 end).
 (*
  Realizer [p,q:nat][c:Code]c.
@@ -130,9 +130,9 @@ Proof.
  refine
   (fun p q g g' =>
    match g with
-   | gencode_intro c _ =>
+   | gencode_intro c s =>
        match g' with
-       | gencode_intro c' _ => gencode_intro _ (app c c') _
+       | gencode_intro c' s0 => gencode_intro _ (app c c') _
        end
    end).
 (*
@@ -161,9 +161,9 @@ Proof.
  refine
   (fun p q r g g' =>
    match g with
-   | gencode_intro cpr _ =>
+   | gencode_intro cpr s =>
        match g' with
-       | gencode_intro cq _ =>
+       | gencode_intro cq s0 =>
            gencode_intro _ (app cpr (app cq (seq MUL End))) _
        end
    end).
@@ -195,9 +195,9 @@ Proof.
  refine
   (fun p q g g' =>
    match g with
-   | gencode_intro cp _ =>
+   | gencode_intro cp s =>
        match g' with
-       | gencode_intro cq _ => gencode_intro _ (app cp (seq PUSH cq)) _
+       | gencode_intro cq s0 => gencode_intro _ (app cp (seq PUSH cq)) _
        end
    end).
 (* 
@@ -226,9 +226,9 @@ Proof.
   refine
    (fun p q r g g' =>
     match g with
-    | gencode_intro kpr _ =>
+    | gencode_intro kpr s =>
         match g' with
-        | gencode_intro mq _ =>
+        | gencode_intro mq s0 =>
             gencode_intro _
               (app kpr (seq PUSH (seq SWAP (app mq (seq MUL End))))) _
         end

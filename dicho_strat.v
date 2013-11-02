@@ -118,7 +118,7 @@ Proof.
  intro H'.
  elim (quotient 2 H' x); intros.
  refine match quotient (two_power x0) _ n with
-        | exist n _ => exist _ n _
+        | exist n0 e => exist _ n0 _
         end.
 
  unfold gt in |- *.

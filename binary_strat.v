@@ -48,7 +48,7 @@ Proof.
  refine
   (mkstrat
      (fun n h => match quotient two _ n with
-                 | exist n0 _ => exist _ n0 _
+                 | exist n0 e => exist _ n0 _
                  end)).
 (*
  Realizer [n:nat](quotient two n) .
