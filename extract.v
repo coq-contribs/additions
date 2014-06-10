@@ -56,7 +56,6 @@ Extract Constant i2n =>
 ".
 
 
-[
   Extract Constant z2b =>
    "
   let rec p2b = function 
@@ -70,7 +69,7 @@ Extract Constant i2n =>
    | Zneg p -> (Big_int.minus_big_int (p2b p))       
 "
   .
-   ].
+
   
 Extract Inductive bool => bool [ true false ].
 Extract Inductive sumbool => bool [ true false ].
