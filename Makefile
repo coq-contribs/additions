@@ -154,8 +154,7 @@ endif
 #                                     #
 #######################################
 
-all: $(VOFILES) fib\
-  test
+all: $(VOFILES) fib
 
 quick: $(VOFILES:.vo=.vio)
 
@@ -193,7 +192,7 @@ beautify: $(VFILES:=.beautified)
 	@echo 'Do not do "make clean" until you are sure that everything went well!'
 	@echo 'If there were a problem, execute "for file in $$(find . -name \*.v.old -print); do mv $${file} $${file%.old}; done" in your shell/'
 
-.PHONY: all archclean beautify byte clean cleanall gallina gallinahtml html install install-doc install-natdynlink install-toploop opt printenv quick uninstall userinstall validate vio2vo
+.PHONY: all archclean beautify byte clean cleanall gallina gallinahtml html install install-doc install-natdynlink install-toploop opt printenv quick uninstall userinstall validate vio2vo test
 
 ###################
 #                 #
@@ -257,7 +256,6 @@ clean::
 	rm -f all.ps all-gal.ps all.pdf all-gal.pdf all.glob $(VFILES:.v=.glob) $(VFILES:.v=.tex) $(VFILES:.v=.g.tex) all-mli.tex
 	- rm -rf html mlihtml uninstall_me.sh
 	- rm -rf fib
-	- rm -rf test
 
 cleanall:: clean
 	rm -f $(patsubst %.v,.%.aux,$(VFILES))
