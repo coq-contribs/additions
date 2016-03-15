@@ -1,4 +1,5 @@
 -R . Additions
+
 while.v
 two_power.v
 trivial.v
@@ -27,6 +28,7 @@ Constants.v
 extract.v
 extract_hs.v
 extract_scm.v
+
 # the test :
 -extra fib extract.vo "$(CAMLBIN)ocamlopt -o fib nums.cmxa fibo.mli fibo.ml main.ml"
 -extra-phony test fib 
