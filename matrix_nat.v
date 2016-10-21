@@ -69,14 +69,14 @@ Lemma matrix:(monoid Mat2).
   Intros.
   Unfold Id2 Mat_mult;Simpl.
   Repeat Elim plus_n_O .
-  Auto with v62.
+  Auto .
   Induction a. 
   Intros.
   Unfold Id2 Mat_mult;Simpl.
   Repeat Elim mult_n_O .
   Repeat Rewrite mult_n_1. 
   Simpl;Repeat Elim plus_n_O.
-  Auto with v62.
+  Auto .
 Defined.
 
 (* Fibonacci numbers *)
@@ -95,18 +95,18 @@ Fixpoint Fib[n:nat]:nat :=
 
 Lemma Unfold_FibO:(Fib O)=(S O).
 Proof.
- Unfold Fib;Simpl;Auto with v62.
+ Unfold Fib;Simpl;Auto .
 Qed.
 
 Lemma Unfold_Fib1:(Fib (S O))=(S O).
 Proof.
- Unfold Fib;Simpl;Auto with v62.
+ Unfold Fib;Simpl;Auto .
 Qed.
 
 Lemma Unfold_FibSSn:(n:nat)(Fib (S (S n)))=(plus (Fib (S n)) (Fib (n))).
 Proof.
  Intro n;Unfold 1 Fib.
- Simpl;Auto with v62.
+ Simpl;Auto .
 Qed.
 
 
@@ -116,17 +116,17 @@ Definition shift_Fib:=[n:nat]<nat>Case n of O [p:nat](Fib p) end.
 
 Lemma Unfold_shift_Fib:(n:nat)(shift_Fib (S n))=(Fib n).
 Proof.
- Intro n;Unfold shift_Fib;Auto with v62.
+ Intro n;Unfold shift_Fib;Auto .
 Qed.
 
 Lemma Simpl_shift_Fib:(n:nat)(shift_Fib (S (S n)))=
                              (plus (shift_Fib (S n)) (shift_Fib n)).
 Proof.
  Induction n.
- Unfold shift_Fib Fib;Simpl;Auto with v62.
+ Unfold shift_Fib Fib;Simpl;Auto .
  Intros.
  Unfold shift_Fib.
- Rewrite Unfold_FibSSn;Auto with v62.
+ Rewrite Unfold_FibSSn;Auto .
 Qed.
 
 
@@ -143,7 +143,7 @@ Proof.
  Unfold Mat_mult.
  Simpl.
  Repeat Elim plus_n_O.
- Auto with v62.
+ Auto .
 Qed.
 
 Lemma fib_n:(n:nat)
@@ -156,13 +156,13 @@ Proof.
  Induction n.
  Unfold power shift_Fib o u ;Simpl.
  Unfold fib_mat;Simpl.
- Unfold Mat_mult Id2;Simpl;Auto with v62.
+ Unfold Mat_mult Id2;Simpl;Auto .
  Intros.
  Rewrite (fib_mat_n (S n0) ? ? ? H).
  Rewrite (Simpl_shift_Fib (S n0)).
  Pattern 4 (shift_Fib (S (S n0))).
  Rewrite (Simpl_shift_Fib n0).
- Auto with v62.
+ Auto .
 Qed.
 
 
@@ -171,7 +171,7 @@ Lemma fib_computation:(n:nat)(lt O n)->
          (M11 (power Mat2 matrix fib_mat n)).
 Proof.
  Induction n.
- Intro;Absurd (lt O O);Auto with v62.
+ Intro;Absurd (lt O O);Auto .
  Intros.
- Rewrite fib_n;Unfold M11;Auto with v62.
+ Rewrite fib_n;Unfold M11;Auto .
 Qed.
