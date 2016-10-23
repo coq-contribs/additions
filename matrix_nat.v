@@ -26,152 +26,141 @@
 
 (*          2-2 matrices with natural coefficients                          *)
 
-(* origninal version using nat instead of Z                                 *)
+(* original version using nat instead of Z                                  *)
 
-Require monoid.
-Require Arith.
-Require Compare_dec.
-Require fmpc.
+Require Import monoid.
+Require Import Arith.
+Require Import Compare_dec.
+Require Import fmpc.
 
-Record Mat2:Set :=
-  mat2{
-      M11:nat;
-      M12:nat;
-      M21:nat;
-      M22:nat}.
+Record Mat2 : Set := mat2 {M11 : nat; M12 : nat; M21 : nat; M22 : nat}.
 
-Definition Id2:=(mat2 (S O) O O (S O)).   
+Definition Id2 := mat2 1 0 0 1.
 
-Definition Mat_mult:=[M,M':Mat2]
-                      (mat2 (plus (mult (M11 M) (M11 M'))
-                                  (mult (M12 M) (M21 M'))  )
-                            (plus (mult (M11 M) (M12 M'))
-                                  (mult (M12 M) (M22 M'))  )
-                            (plus (mult (M21 M) (M11 M'))
-                                  (mult (M22 M) (M21 M'))  )
-                            (plus (mult (M21 M) (M12 M'))
-                                  (mult (M22 M) (M22 M'))  )).
+Definition Mat_mult (M M' : Mat2) :=
+  mat2 (M11 M * M11 M' + M12 M * M21 M') (M11 M * M12 M' + M12 M * M22 M')
+    (M21 M * M11 M' + M22 M * M21 M') (M21 M * M12 M' + M22 M * M22 M').
+
+Axiom
+  Mat_assoc :
+    forall M M' M'' : Mat2,
+    Mat_mult M (Mat_mult M' M'') = Mat_mult (Mat_mult M M') M''.
 
 
-Well_Known Mat_assoc: (M,M',M'':Mat2)
-                       (Mat_mult M (Mat_mult M' M''))=
-                       (Mat_mult (Mat_mult M M') M'').
-
-
-Lemma matrix:(monoid Mat2).
- Refine (mkmonoid Mat2 Id2 Mat_mult ? ? ?).
-(*
- Realizer (mkmonoid Mat2 Id2 Mat_mult).
- Program_all.
-*)
- Exact Mat_assoc.
- Induction a. 
-  Intros.
-  Unfold Id2 Mat_mult;Simpl.
-  Repeat Elim plus_n_O .
-  Auto with v62.
-  Induction a. 
-  Intros.
-  Unfold Id2 Mat_mult;Simpl.
-  Repeat Elim mult_n_O .
-  Repeat Rewrite mult_n_1. 
-  Simpl;Repeat Elim plus_n_O.
-  Auto with v62.
+Lemma matrix : monoid Mat2.
+ refine (mkmonoid Mat2 Id2 Mat_mult _ _ _).
+ exact Mat_assoc.
+ simple induction a.
+  intros M13 M14 M23 M24.
+  unfold Id2, Mat_mult in |- *; simpl in |- *.
+  repeat rewrite plus_0_r.
+  case M13; case M14; case M23; case M24; auto.
+  simple induction a.
+  intros.
+  unfold Id2, Mat_mult in |- *; simpl in |- *.
+  repeat rewrite mult_0_r.
+  repeat rewrite mult_1_r.
+  simpl in |- *; repeat rewrite plus_0_r.
+  auto.
 Defined.
 
 (* Fibonacci numbers *)
 
 (* definition *)
 
-Fixpoint Fib[n:nat]:nat :=
-    <nat>Case n of (* O *) (S O)
-                         (* (S p ) *) [p:nat]
-                                     <nat>Case p of (* O *) (S O)
-                                                    (* S q *)
-                                                   [q:nat](plus (Fib q)
-                                                                (Fib p))
-                                     end
-           end.
+Fixpoint Fib (n : nat) : nat :=
+  match n return nat with
+  | O => (* O *)  1
+      (* (S p ) *)
+  | S p =>
+      match p return nat with
+      | O => (* O *)  1
+          (* S q *)
+      | S q => Fib q + Fib p
+      end
+  end.
 
-Lemma Unfold_FibO:(Fib O)=(S O).
+Lemma Unfold_FibO : Fib 0 = 1.
 Proof.
- Unfold Fib;Simpl;Auto with v62.
+ unfold Fib in |- *; simpl in |- *; auto with arith.
 Qed.
 
-Lemma Unfold_Fib1:(Fib (S O))=(S O).
+Lemma Unfold_Fib1 : Fib 1 = 1.
 Proof.
- Unfold Fib;Simpl;Auto with v62.
+ unfold Fib in |- *; simpl in |- *; auto with arith.
 Qed.
 
-Lemma Unfold_FibSSn:(n:nat)(Fib (S (S n)))=(plus (Fib (S n)) (Fib (n))).
+Lemma Unfold_FibSSn : forall n : nat, Fib (S (S n)) = Fib (S n) + Fib n.
 Proof.
- Intro n;Unfold 1 Fib.
- Simpl;Auto with v62.
+ intro n; unfold Fib at 1 in |- *.
+ simpl in |- *; auto with arith.
 Qed.
-
 
 (* A "Decaled" Fibonnacci function *)
 
-Definition shift_Fib:=[n:nat]<nat>Case n of O [p:nat](Fib p) end.
+Definition shift_Fib (n : nat) :=
+  match n return nat with
+  | O => 0
+  | S p => Fib p
+  end.
 
-Lemma Unfold_shift_Fib:(n:nat)(shift_Fib (S n))=(Fib n).
+Lemma Unfold_shift_Fib : forall n : nat, shift_Fib (S n) = Fib n.
 Proof.
- Intro n;Unfold shift_Fib;Auto with v62.
+ intro n; unfold shift_Fib in |- *; auto with arith.
 Qed.
 
-Lemma Simpl_shift_Fib:(n:nat)(shift_Fib (S (S n)))=
-                             (plus (shift_Fib (S n)) (shift_Fib n)).
+Lemma Simpl_shift_Fib :
+ forall n : nat, shift_Fib (S (S n)) = shift_Fib (S n) + shift_Fib n.
 Proof.
- Induction n.
- Unfold shift_Fib Fib;Simpl;Auto with v62.
- Intros.
- Unfold shift_Fib.
- Rewrite Unfold_FibSSn;Auto with v62.
-Qed.
-
-
-Definition fib_mat:=(mat2 (S O) (S O) (S O) O).
-
-
-Lemma fib_mat_n:(n:nat)(a,b,d:nat)
-        (power Mat2 matrix fib_mat n)=(mat2 a b b d)
-     -> (power Mat2 matrix fib_mat (S n))=
-                                      (mat2 (plus a b) (plus b d) a b).
-Proof.
- Intros;Simpl.
- Rewrite H.
- Unfold Mat_mult.
- Simpl.
- Repeat Elim plus_n_O.
- Auto with v62.
-Qed.
-
-Lemma fib_n:(n:nat)
-             (power Mat2 matrix fib_mat (S n))=
-                   (mat2 (shift_Fib (S (S n)))
-                         (shift_Fib (S n))
-                         (shift_Fib (S n))
-                         (shift_Fib n)).
-Proof.
- Induction n.
- Unfold power shift_Fib o u ;Simpl.
- Unfold fib_mat;Simpl.
- Unfold Mat_mult Id2;Simpl;Auto with v62.
- Intros.
- Rewrite (fib_mat_n (S n0) ? ? ? H).
- Rewrite (Simpl_shift_Fib (S n0)).
- Pattern 4 (shift_Fib (S (S n0))).
- Rewrite (Simpl_shift_Fib n0).
- Auto with v62.
+ simple induction n.
+ unfold shift_Fib, Fib in |- *; simpl in |- *; auto with arith.
+ intros.
+ unfold shift_Fib in |- *.
+ rewrite Unfold_FibSSn; auto with arith.
 Qed.
 
 
-Lemma fib_computation:(n:nat)(lt O n)->
-         (Fib n)=
-         (M11 (power Mat2 matrix fib_mat n)).
+Definition fib_mat := mat2 1 1 1 0.
+
+
+Lemma fib_mat_n :
+ forall (n : nat) (a b d : nat),
+ power Mat2 matrix fib_mat n = mat2 a b b d ->
+ power Mat2 matrix fib_mat (S n) = mat2 (a + b) (b + d) a b.
 Proof.
- Induction n.
- Intro;Absurd (lt O O);Auto with v62.
- Intros.
- Rewrite fib_n;Unfold M11;Auto with v62.
+ intros; simpl in |- *.
+ rewrite H.
+ unfold Mat_mult in |- *.
+ simpl in |- *.
+ repeat rewrite plus_0_r.
+ case a; case b; case d; auto.
+Qed.
+
+Lemma fib_n :
+ forall n : nat,
+ power Mat2 matrix fib_mat (S n) =
+ mat2 (shift_Fib (S (S n))) (shift_Fib (S n))
+   (shift_Fib (S n)) (shift_Fib n).
+Proof.
+ simple induction n.
+ unfold power, shift_Fib, o, u in |- *; simpl in |- *.
+ unfold fib_mat in |- *; simpl in |- *.
+ unfold Mat_mult, Id2 in |- *; simpl in |- *; auto with arith.
+ intros.
+ rewrite (fib_mat_n (S n0) _ _ _ H).
+ rewrite (Simpl_shift_Fib (S n0)).
+ pattern (shift_Fib (S (S n0))) at 4 in |- *.
+ rewrite (Simpl_shift_Fib n0).
+ auto with arith.
+Qed.
+
+
+Lemma fib_computation :
+ forall n : nat,
+ 0 < n -> Fib n = M11 (power Mat2 matrix fib_mat n).
+Proof.
+ simple induction n.
+ intro; absurd (0 < 0); auto with arith.
+ intros.
+ rewrite fib_n; unfold M11 in |- *; auto with arith.
 Qed.
