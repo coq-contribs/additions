@@ -24,6 +24,7 @@ Require Import spec.
 Require Import log2_spec.
 Require Import log2_implementation.
 Require Import Compare_dec.
+Require Extraction.
 
 Require Import while.
 Require Import imperative.
