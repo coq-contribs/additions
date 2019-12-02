@@ -149,7 +149,7 @@ Section generation.
     | left h => inright _ h
     | right n =>
         match log2_r p _ with
-        | existS l b =>
+        | existT l b =>
             match b with
             | left _ => inleft _ (inr _ (exist _ l _))
             | right a =>

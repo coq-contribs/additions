@@ -59,7 +59,7 @@ Section applications.
  refine
   (fun n _ =>
    match log2 n _ with
-   | existS l b =>
+   | existT l b =>
        match b with
        | left e => exist _ l _
        | right a => exist _ (S l) _
@@ -92,7 +92,7 @@ Section applications.
  (**************************************************************)
  Proof.
  refine (fun n _ => match log2 n _ with
-                    | existS l b => exist _ l _
+                    | existT l b => exist _ l _
                     end).
  auto with arith.
 
